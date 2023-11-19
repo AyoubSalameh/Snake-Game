@@ -1,2 +1,2 @@
 # Snake-Game
-creating a basic snake game, following a tutorial
+Learning PyGame, by following a Youtube tutorial and programming a basic snake game.
