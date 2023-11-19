@@ -13,11 +13,14 @@ class FRUIT:
         self.x = random.randint(0, cell_number - 1)
         self.y = random.randint(0, cell_number - 1)
         self.pos = Vector2(self.x, self.y)
-        
+
     def draw_fruit(self):
         from main import cell_size, screen
+        #image = pygame.image.load("strawberry.png").convert_alpha()
+        image = pygame.image.load("Graphics/apple.png")
+        image = pygame.transform.scale(image, (cell_size, cell_size))
         fruit_rect = pygame.Rect(self.x * cell_size, self.y * cell_size, cell_size, cell_size)
-        pygame.draw.rect(screen, pygame.Color('red'), fruit_rect)
+        screen.blit(image, fruit_rect)
 
     def draw_img(self):
         from main import cell_size, screen

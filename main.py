@@ -14,7 +14,7 @@ class MAIN:
         self.game_over()
 
     def draw_elements(self):
-        self.fruit.draw_img()
+        self.fruit.draw_fruit()
         self.snake.draw_snake()
 
     def eat(self):
@@ -23,10 +23,10 @@ class MAIN:
             self.snake.add_tail()
 
     def game_over(self):
-        if not 0 <= self.snake.body[0].x < 20:
+        if not 0 <= self.snake.body[0].x < cell_number:
             pygame.quit()
             sys.exit()
-        if not 0 <= self.snake.body[0].y < 20:
+        if not 0 <= self.snake.body[0].y < cell_number:
             pygame.quit()
             sys.exit()
         if self.snake.check_collision():
@@ -68,7 +68,7 @@ while True:
                 if main_game.snake.direction.x != -1:
                     main_game.snake.direction = Vector2(1,0)
 
-    screen.fill((20, 140, 200))
+    screen.fill((50, 140, 20))
     main_game.draw_elements()    
     pygame.display.update()
     clock.tick(60)
