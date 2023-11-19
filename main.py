@@ -29,6 +29,9 @@ class MAIN:
         if not 0 <= self.snake.body[0].y < 20:
             pygame.quit()
             sys.exit()
+        if self.snake.check_collision():
+            pygame.quit()
+            sys.exit()
 
 pygame.init()
 cell_size = 35
@@ -53,13 +56,17 @@ while True:
             main_game.update()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_w:
-                main_game.snake.direction = Vector2(0,-1)
+                if main_game.snake.direction.y != 1:
+                    main_game.snake.direction = Vector2(0,-1)
             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                main_game.snake.direction = Vector2(0,1)
+                if main_game.snake.direction.y != -1:
+                    main_game.snake.direction = Vector2(0,1)
             if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                main_game.snake.direction = Vector2(-1,0)
+                if main_game.snake.direction.x != 1:
+                    main_game.snake.direction = Vector2(-1,0)
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                main_game.snake.direction = Vector2(1,0)
+                if main_game.snake.direction.x != -1:
+                    main_game.snake.direction = Vector2(1,0)
 
     screen.fill((20, 140, 200))
     main_game.draw_elements()    

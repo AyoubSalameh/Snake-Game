@@ -24,3 +24,9 @@ class SNAKE:
         body_copy.insert(0, body_copy[0] + self.direction)
         self.body = body_copy[:]
 
+    def check_collision(self):
+        for block in self.body[1:]:
+            if block == self.body[0]:
+                return True
+
+
