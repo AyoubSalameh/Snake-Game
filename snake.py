@@ -3,8 +3,8 @@ from pygame.math import Vector2
 
 class SNAKE:
     def __init__(self):
-        self.body = [Vector2(11, 13), Vector2(11, 14), Vector2(11, 15)]
-        self.direction = Vector2(1,0)
+        self.body = [Vector2(9, 15), Vector2(9, 16), Vector2(9, 17)]
+        self.direction = Vector2(0,-1)
 
         from main import cell_size
 
