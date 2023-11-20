@@ -14,13 +14,45 @@ class MAIN:
         self.game_over()
 
     def draw_elements(self):
+        self.draw_grass()
         self.fruit.draw_fruit()
         self.snake.draw_snake()
+        self.draw_score()
 
     def eat(self):
         if self.fruit.pos == self.snake.body[0]:
             self.fruit.randomize()
             self.snake.add_tail()
+
+        for block in self.snake.body[1:]:
+            if block == self.fruit.pos:
+                self.fruit.randomize()
+
+    def draw_grass(self):
+        dark_green = (0x57, 0xCC, 0x99)
+        
+        for col in range(cell_number):
+            for row in range(cell_number):
+                if (row + col) % 2 == 0:
+                    grass_rect = pygame.Rect(col * cell_size, row * cell_size, cell_size, cell_size)
+                    pygame.draw.rect(screen, dark_green, grass_rect)
+
+    def draw_score(self):
+        score = str(len(self.snake.body) - 3)
+        score_surface = game_font.render(score, True, (0x13, 0x2A, 0x13))
+        x_pos = (cell_number - 1) * cell_size - 10
+        y_pos = (cell_number - 1) * cell_size - 10
+        score_rect = score_surface.get_rect(topleft = (x_pos, y_pos))
+
+        image = pygame.image.load("Graphics/apple.png").convert_alpha()
+        #image = pygame.transform.scale(image, (35, 35))
+        image_rect = image.get_rect(topright = (x_pos - 8, y_pos - 4))
+
+        bg_rect = pygame.Rect(image_rect.left, image_rect.top, image_rect.width + score_rect.width + 15, image_rect.height)
+        pygame.draw.rect(screen, (0x80, 0xED, 0x99), bg_rect)
+        pygame.draw.rect(screen, (0x13, 0x2A, 0x13), bg_rect, 2)
+        screen.blit(score_surface, score_rect)
+        screen.blit(image, image_rect)
 
     def game_over(self):
         if not 0 <= self.snake.body[0].x < cell_number:
@@ -40,6 +72,8 @@ screen = pygame.display.set_mode((cell_size * cell_number, cell_size * cell_numb
 pygame.display.set_caption("Snake Game")
 
 clock = pygame.time.Clock()
+
+game_font = pygame.font.Font('Graphics/pixelmix.ttf', 30)
 
 main_game = MAIN()
 
@@ -68,7 +102,7 @@ while True:
                 if main_game.snake.direction.x != -1:
                     main_game.snake.direction = Vector2(1,0)
 
-    screen.fill((50, 140, 20))
+    screen.fill((0x80, 0xED, 0x99))
     main_game.draw_elements()    
     pygame.display.update()
     clock.tick(60)
