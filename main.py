@@ -55,15 +55,13 @@ class MAIN:
         screen.blit(image, image_rect)
 
     def game_over(self):
-        if not 0 <= self.snake.body[0].x < cell_number:
-            pygame.quit()
-            sys.exit()
-        if not 0 <= self.snake.body[0].y < cell_number:
-            pygame.quit()
-            sys.exit()
-        if self.snake.check_collision():
-            pygame.quit()
-            sys.exit()
+        if not 0 <= self.snake.body[0].x < cell_number or \
+        not 0 <= self.snake.body[0].y < cell_number \
+        or self.snake.check_collision():
+            main_game.main_screen()
+            self.snake.body = [Vector2(9, 15), Vector2(9, 16), Vector2(9, 17)]
+            self.snake.direction = Vector2(0,-1)
+
 
     def main_screen(self):
 
@@ -140,6 +138,8 @@ pygame.time.set_timer(SCREEN_UPDATE, 150)
 main_game.main_screen()
 while True:
     main_game.play_screen()
+    
+    #add a looping screen that is end screen, with score displayed, and a msg
     """
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
