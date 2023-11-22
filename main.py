@@ -3,10 +3,12 @@ from fruit import FRUIT
 from snake import SNAKE
 from pygame.math import Vector2
 
+
 class MAIN:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
+        
         
     def update(self):
         self.snake.move_snake()
@@ -58,7 +60,7 @@ class MAIN:
         if not 0 <= self.snake.body[0].x < cell_number or \
         not 0 <= self.snake.body[0].y < cell_number \
         or self.snake.check_collision():
-            main_game.main_screen()
+            main_game.game_over_screen()
             self.snake.body = [Vector2(9, 15), Vector2(9, 16), Vector2(9, 17)]
             self.snake.direction = Vector2(0,-1)
 
@@ -72,6 +74,34 @@ class MAIN:
         title_rect = title_surface.get_rect(center = (x_pos, y_pos))
 
         instruction = "press SPACE to play"
+        inst_surface = game_font.render(instruction, True, (0x13, 0x2A, 0x13))
+        inst_rect = inst_surface.get_rect(center = (x_pos, x_pos + 100))
+
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        return
+                    
+            screen.fill((0x80, 0xED, 0x99))
+            main_game.draw_elements()
+            screen.blit(title_surface, title_rect)
+            screen.blit(inst_surface, inst_rect)
+            pygame.display.update()
+            clock.tick(60)
+
+    def game_over_screen(self):
+        title = "GAME OVER"
+        title_surface = bold_font.render(title, True, (0x13, 0x2A, 0x13))
+        x_pos = cell_number * cell_size // 2
+        y_pos = cell_number * cell_size // 2 - 100
+        title_rect = title_surface.get_rect(center = (x_pos, y_pos))
+
+        instruction = "press SPACE to play again"
         inst_surface = game_font.render(instruction, True, (0x13, 0x2A, 0x13))
         inst_rect = inst_surface.get_rect(center = (x_pos, x_pos + 100))
 
@@ -118,6 +148,7 @@ class MAIN:
         pygame.display.update()
         clock.tick(60)
 
+
 pygame.init()
 cell_size = 35
 cell_number = 20
@@ -138,31 +169,3 @@ pygame.time.set_timer(SCREEN_UPDATE, 150)
 main_game.main_screen()
 while True:
     main_game.play_screen()
-    
-    #add a looping screen that is end screen, with score displayed, and a msg
-    """
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == SCREEN_UPDATE:
-            main_game.update()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP or event.key == pygame.K_w:
-                if main_game.snake.direction.y != 1:
-                    main_game.snake.direction = Vector2(0,-1)
-            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                if main_game.snake.direction.y != -1:
-                    main_game.snake.direction = Vector2(0,1)
-            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                if main_game.snake.direction.x != 1:
-                    main_game.snake.direction = Vector2(-1,0)
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                if main_game.snake.direction.x != -1:
-                    main_game.snake.direction = Vector2(1,0)
-
-    screen.fill((0x80, 0xED, 0x99))
-    main_game.draw_elements()    
-    pygame.display.update()
-    clock.tick(60)
-    """
