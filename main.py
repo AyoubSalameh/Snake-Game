@@ -64,7 +64,6 @@ class MAIN:
             self.snake.body = [Vector2(9, 15), Vector2(9, 16), Vector2(9, 17)]
             self.snake.direction = Vector2(0,-1)
 
-
     def main_screen(self):
 
         title = "SNAKE GAME"
